@@ -1,0 +1,11 @@
+FROM maven:3.5-jdk-8-alpine as build
+COPY . /build/
+WORKDIR /build
+RUN mvn package
+
+
+FROM fabric8/java-jboss-openjdk8-jdk:1.4.0
+ENV JAVA_APP_JAR app.jar
+ENV AB_OFF true
+EXPOSE 8080
+COPY --from=build /build/target/*.jar /deployments/$JAVA_APP_JAR

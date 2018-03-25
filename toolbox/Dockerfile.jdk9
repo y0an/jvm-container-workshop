@@ -1,0 +1,13 @@
+FROM maven:3.5-jdk-8-alpine as build
+COPY . /build/
+WORKDIR /build
+RUN javac *.java
+
+FROM openjdk:9-jdk
+WORKDIR /app
+COPY --from=build /build/*.class /app/
+COPY entrypoint.sh /
+COPY jstatd-start.sh /
+RUN /jstatd-start.sh 
+ENTRYPOINT [ "java", "-XshowSettings:vm" ]
+CMD [ "HeapTest" ]

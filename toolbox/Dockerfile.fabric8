@@ -1,0 +1,9 @@
+FROM maven:3.5-jdk-8-alpine as build
+COPY . /build/
+WORKDIR /build
+RUN javac *.java
+
+FROM fabric8/java-centos-openjdk8-jdk 
+COPY --from=build /build/*.class /
+ENTRYPOINT [ "java", "-XshowSettings:vm" ]
+CMD [ "HeapTest" ]
