@@ -10,8 +10,15 @@ container_id=$(docker run -d --name=simple-springboot -m 256MB --memory-swap=256
 
 watch -n1 cat /sys/fs/cgroup/memory/docker/${container_id}/memory.usage_in_bytes /sys/fs/cgroup/memory/docker/${container_id}/memory.memsw.usage_in_bytes  
 
-echo "Reading OOM Status in 'docker container inspect'"
+
+echo 
+
+echo "### Reading OOM Status in 'docker container inspect'"
 
 echo "docker container inspect $(docker container ls -lq) --format={{.State.OOMKilled}}"
 
 docker container inspect $(docker container ls -lq) --format={{.State.OOMKilled}}
+
+read -n1 -r -p "Press any key to continue to check journalctl..." key
+
+sudo journalctl -f _TRANSPORT=kernel
