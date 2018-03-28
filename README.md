@@ -112,7 +112,7 @@ docker run -m 1GB openjdk:8-jre java -XX:+UnlockExperimentalVMOptions -XX:+UseCG
 ```
 
 ```bash 
-docker run -m 1GB openjdk:10-jre java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XshowSettings:vm -version
+docker run -m 1GB openjdk:10-jre java -XshowSettings:vm -version
 ```
 
 Only 228MB are used :
